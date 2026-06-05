@@ -181,3 +181,12 @@ spring.datasource.password=your_password
 
 - 画像は `src/main/resources/static/images/` に保存されます
 - パスワードはハッシュ化せず `{noop}` プレフィックスで保存しています（学習用）
+
+---
+
+## 📸 スクリーンショット
+
+<div style="display:flex; gap:8px;">
+  <img src="docs/tamalogsample_1" width="30%">
+  <img src="docs/tamalogsample_2" width="30%">
+</div>
