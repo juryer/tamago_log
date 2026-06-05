@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ログイン | たまログ</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #fff7d6,
+        #ffe8a3
+    );
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+}
+
+/* カード */
+
+.login-card{
+
+    width:420px;
+
+    background:rgba(255,255,255,0.7);
+
+    backdrop-filter:blur(14px);
+
+    border-radius:28px;
+
+    padding:40px 35px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.1);
+
+    border:1px solid rgba(255,255,255,0.5);
+}
+
+/* ロゴ */
+
+.logo-area{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+.title{
+    font-size:34px;
+    font-weight:600;
+    color:#f0a500;
+}
+
+.sub-title{
+    margin-top:8px;
+    font-size:14px;
+    color:#777;
+}
+
+/* メッセージ */
+
+.notice{
+    background:#fff8e8;
+    border-left:5px solid #f0a500;
+
+    padding:14px;
+    border-radius:12px;
+
+    margin-bottom:22px;
+
+    color:#666;
+    font-size:14px;
+}
+
+/* エラー */
+
+.error-msg{
+
+    background:#ffecec;
+
+    color:#d63031;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    font-size:13px;
+}
+
+/* 入力欄 */
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-label{
+    display:block;
+
+    margin-bottom:8px;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:#444;
+}
+
+.form-input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#ffffff;
+
+    font-size:14px;
+
+    box-shadow:
+    inset 0 2px 5px rgba(0,0,0,0.05);
+
+    outline:none;
+
+    transition:0.2s;
+}
+
+.form-input:focus{
+
+    box-shadow:
+    0 0 0 3px rgba(255,196,0,0.3);
+
+}
+
+/* ボタン */
+
+.login-btn{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffbf00,
+        #ff9900
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.25s;
+
+    box-shadow:
+    0 6px 18px rgba(255,170,0,0.35);
+}
+
+.login-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 22px rgba(255,170,0,0.45);
+}
+
+/* 下 */
+
+.bottom-area{
+
+    margin-top:25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.bottom-link{
+
+    text-decoration:none;
+
+    color:#777;
+
+    font-size:14px;
+
+    transition:0.2s;
+}
+
+.bottom-link:hover{
+    color:#f0a500;
+}
+
+/* 区切り */
+
+.divider{
+
+    text-align:center;
+
+    margin:24px 0;
+
+    color:#aaa;
+
+    font-size:13px;
+
+    position:relative;
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:50%;
+
+    width:35%;
+
+    height:1px;
+
+    background:#ddd;
+}
+
+.divider::before{
+    left:0;
+}
+
+.divider::after{
+    right:0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+<div th:if="${message}" 
+     style="background:#eaffea;color:#27ae60;padding:12px;border-radius:10px;margin-bottom:18px;">
+    🎉 <span th:text="${message}"></span>
+</div>
+
+    <!-- ロゴ -->
+    <div class="logo-area">
+
+        <div class="logo">🍳</div>
+
+        <div class="title">
+            たまログ
+        </div>
+
+        <div class="sub-title">
+            ひとつのたまごから広がる世界
+        </div>
+
+    </div>
+
+    <!-- 注意 -->
+    <div class="notice">
+
+        メニューの投稿・編集には
+        ログインが必要です 🐣
+
+    </div>
+
+    <!-- エラー -->
+    <div class="error-msg"
+         th:if="${param.error}">
+
+        ユーザー名またはパスワードが違います。
+
+    </div>
+
+    <!-- ログアウト -->
+    <div class="error-msg"
+         style="background:#eaffea;color:#27ae60;"
+         th:if="${param.logout}">
+
+        ログアウトしました。
+
+    </div>
+
+    <!-- フォーム -->
+    <form th:action="@{/login}"
+          method="post">
+
+        <!-- CSRF -->
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+
+        <!-- ユーザー名 -->
+        <div class="form-group">
+
+            <label class="form-label">
+                ユーザー名
+            </label>
+
+            <input type="text"
+                   name="username"
+                   class="form-input"
+                   placeholder="ユーザー名を入力"
+                   autocomplete="username">
+
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-group">
+
+            <label class="form-label">
+                パスワード
+            </label>
+
+            <input type="password"
+                   name="password"
+                   class="form-input"
+                   placeholder="パスワードを入力"
+                   autocomplete="current-password">
+
+        </div>
+
+        <!-- ボタン -->
+        <button type="submit"
+                class="login-btn">
+
+            ログイン 🐥
+
+        </button>
+
+    </form>
+
+    <!-- 区切り -->
+    <div class="divider">
+        or
+    </div>
+
+    <!-- 下 -->
+    <div class="bottom-area">
+
+        <a th:href="@{/}"
+           class="bottom-link">
+
+            ← TOPへ戻る
+
+        </a>
+
+        <a th:href="@{/signup}" class="bottom-link">
+            新規登録
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
