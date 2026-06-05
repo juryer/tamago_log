@@ -187,6 +187,6 @@ spring.datasource.password=your_password
 ## 📸 スクリーンショット
 
 <div style="display:flex; gap:8px;">
-  <img src="docs/tamalogsample_1" width="30%">
-  <img src="docs/tamalogsample_2" width="30%">
+  <img src="docs/tamalogsample_1.webp" width="30%">
+  <img src="docs/tamalogsample_2.webp" width="30%">
 </div>
